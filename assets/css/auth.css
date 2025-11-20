@@ -1,0 +1,284 @@
+/**
+ * ESTILOS AUTENTICACIÓN
+ * Login y Registro - Desechables Punto Fijo
+ */
+
+/* ===================================
+   LAYOUT GENERAL AUTH
+   =================================== */
+
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 20px 0;
+}
+
+/* ===================================
+   CARD LOGIN/REGISTRO
+   =================================== */
+
+.card-login,
+.card-registro {
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    border: none;
+}
+
+.card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white;
+    border-radius: 15px 15px 0 0 !important;
+    border: none;
+}
+
+/* ===================================
+   LOGO CONTAINER
+   =================================== */
+
+.logo-container {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 20px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.logo-container i {
+    font-size: 4rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ===================================
+   FORM CONTROLS
+   =================================== */
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+.form-control-lg {
+    padding: 12px 20px;
+}
+
+/* ===================================
+   BUTTONS
+   =================================== */
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    transition: all 0.3s;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.btn-outline-primary {
+    border-color: #667eea;
+    color: #667eea;
+    transition: all 0.3s;
+}
+
+.btn-outline-primary:hover {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-color: transparent;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* ===================================
+   DIVIDER
+   =================================== */
+
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.divider span {
+    padding: 0 10px;
+    color: #6c757d;
+}
+
+/* ===================================
+   ALERTS
+   =================================== */
+
+.alert {
+    border-radius: 10px;
+    border: none;
+}
+
+.alert-success {
+    background: linear-gradient(135deg, #10b98122 0%, #05966922 100%);
+    color: #065f46;
+}
+
+.alert-danger {
+    background: linear-gradient(135deg, #ef444422 0%, #dc262622 100%);
+    color: #991b1b;
+}
+
+.alert-warning {
+    background: linear-gradient(135deg, #f59e0b22 0%, #d9770622 100%);
+    color: #92400e;
+}
+
+/* ===================================
+   CREDENCIALES DE PRUEBA
+   =================================== */
+
+.card code {
+    background: #f8f9fa;
+    padding: 2px 8px;
+    border-radius: 4px;
+    color: #667eea;
+    font-weight: bold;
+}
+
+/* ===================================
+   INFO FOOTER
+   =================================== */
+
+.text-white {
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* ===================================
+   FORM ICONS
+   =================================== */
+
+.form-label i {
+    margin-right: 5px;
+}
+
+/* ===================================
+   INPUTS WITH ICONS
+   =================================== */
+
+.input-group-text {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+}
+
+/* ===================================
+   CHECKBOX/RADIO CUSTOM
+   =================================== */
+
+.form-check-input:checked {
+    background-color: #667eea;
+    border-color: #667eea;
+}
+
+.form-check-input:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25);
+}
+
+/* ===================================
+   CARD BODY
+   =================================== */
+
+.card-body {
+    padding: 30px;
+}
+
+/* ===================================
+   LINKS
+   =================================== */
+
+a {
+    color: #667eea;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+a:hover {
+    color: #764ba2;
+}
+
+/* ===================================
+   RESPONSIVE
+   =================================== */
+
+@media (max-width: 576px) {
+    body {
+        padding: 10px;
+    }
+    
+    .logo-container {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .logo-container i {
+        font-size: 3rem;
+    }
+    
+    .card-body {
+        padding: 20px;
+    }
+}
+
+/* ===================================
+   ANIMATIONS
+   =================================== */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* ===================================
+   VALIDATION STATES
+   =================================== */
+
+.was-validated .form-control:valid {
+    border-color: #10b981;
+}
+
+.was-validated .form-control:invalid {
+    border-color: #ef4444;
+}
+
+.valid-feedback {
+    color: #10b981;
+}
+
+.invalid-feedback {
+    color: #ef4444;
+}

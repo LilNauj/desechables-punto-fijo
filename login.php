@@ -66,9 +66,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 // Redirigir según el rol
                 if ($usuario['rol'] === 'admin') {
-                    redirect('admin.php');
+                    header("Location: admin.php");
+                    exit();
                 } else {
-                    redirect('index.php');
+                    header("Location: index.php");
+                    exit();
                 }
             } else {
                 $error = "Email o contraseña incorrectos";

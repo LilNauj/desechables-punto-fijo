@@ -1,0 +1,377 @@
+/**
+ * ESTILOS PANEL ADMINISTRATIVO
+ * Desechables Punto Fijo
+ */
+
+:root {
+    --sidebar-width: 250px;
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* ===================================
+   LAYOUT GENERAL ADMIN
+   =================================== */
+
+body {
+    background: #f8f9fa;
+}
+
+/* ===================================
+   SIDEBAR
+   =================================== */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: var(--sidebar-width);
+    background: var(--primary-gradient);
+    color: white;
+    transition: all 0.3s;
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.sidebar-header {
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.sidebar-menu li {
+    padding: 0;
+}
+
+.sidebar-menu a {
+    display: block;
+    padding: 15px 20px;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s;
+    border-left: 3px solid transparent;
+}
+
+.sidebar-menu a:hover,
+.sidebar-menu a.active {
+    background: rgba(255,255,255,0.1);
+    border-left-color: white;
+}
+
+.sidebar-menu a i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+/* ===================================
+   MAIN CONTENT
+   =================================== */
+
+.main-content {
+    margin-left: var(--sidebar-width);
+    padding: 30px;
+    min-height: 100vh;
+}
+
+/* ===================================
+   STAT CARDS
+   =================================== */
+
+.stat-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    transition: transform 0.3s;
+    border-left: 4px solid;
+    height: 100%;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.stat-card.primary {
+    border-left-color: #667eea;
+}
+
+.stat-card.success {
+    border-left-color: #10b981;
+}
+
+.stat-card.warning {
+    border-left-color: #f59e0b;
+}
+
+.stat-card.info {
+    border-left-color: #3b82f6;
+}
+
+.stat-card.danger {
+    border-left-color: #ef4444;
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+}
+
+/* ===================================
+   PRODUCT CARDS (ADMIN)
+   =================================== */
+
+.card-producto {
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: none;
+    border-radius: 10px;
+}
+
+.card-producto:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.producto-imagen {
+    height: 150px;
+    background: linear-gradient(135deg, #667eea33 0%, #764ba233 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: #667eea;
+    border-radius: 10px 10px 0 0;
+}
+
+.stock-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+}
+
+/* ===================================
+   CATEGORIA CARDS
+   =================================== */
+
+.categoria-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    transition: all 0.3s;
+    border-left: 4px solid;
+    margin-bottom: 20px;
+}
+
+.categoria-card:hover {
+    transform: translateX(5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.categoria-card.activo {
+    border-left-color: #10b981;
+}
+
+.categoria-card.inactivo {
+    border-left-color: #ef4444;
+    opacity: 0.7;
+}
+
+.categoria-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    background: linear-gradient(135deg, #667eea22 0%, #764ba222 100%);
+    color: #667eea;
+}
+
+/* ===================================
+   USER CARDS
+   =================================== */
+
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.badge-rol {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+}
+
+.usuario-actual {
+    background: linear-gradient(135deg, #667eea11 0%, #764ba211 100%);
+}
+
+/* ===================================
+   VENTA CARDS
+   =================================== */
+
+.venta-card {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    transition: all 0.3s;
+}
+
+.venta-card:hover {
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    transform: translateX(5px);
+}
+
+.estado-badge {
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+/* ===================================
+   TABLES
+   =================================== */
+
+.table-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    margin-top: 30px;
+}
+
+.badge-status {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+}
+
+/* ===================================
+   BUTTONS
+   =================================== */
+
+.btn-gradient {
+    background: var(--primary-gradient);
+    color: white;
+    border: none;
+    transition: all 0.3s;
+}
+
+.btn-gradient:hover {
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    color: white;
+}
+
+/* ===================================
+   MODALS
+   =================================== */
+
+.modal-content {
+    border-radius: 15px;
+    border: none;
+}
+
+.modal-header {
+    border-bottom: 2px solid #667eea;
+}
+
+/* ===================================
+   FORMS
+   =================================== */
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+/* ===================================
+   PAYMENT OPTIONS
+   =================================== */
+
+.payment-option {
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.payment-option:hover {
+    border-color: #667eea;
+    background: rgba(102, 126, 234, 0.05);
+}
+
+.payment-option.selected {
+    border-color: #667eea;
+    background: rgba(102, 126, 234, 0.1);
+}
+
+.payment-option input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    accent-color: #667eea;
+}
+
+/* ===================================
+   EMPTY STATES
+   =================================== */
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.empty-state i {
+    font-size: 5rem;
+    color: #ddd;
+    margin-bottom: 20px;
+}
+
+/* ===================================
+   RESPONSIVE
+   =================================== */
+
+@media (max-width: 768px) {
+    .sidebar {
+        margin-left: calc(-1 * var(--sidebar-width));
+    }
+    
+    .main-content {
+        margin-left: 0;
+    }
+    
+    .sidebar.active {
+        margin-left: 0;
+    }
+    
+    .stat-card {
+        margin-bottom: 20px;
+    }
+}

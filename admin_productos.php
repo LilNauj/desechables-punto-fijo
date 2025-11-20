@@ -226,7 +226,7 @@ $categorias = $db->query("SELECT * FROM categorias WHERE estado = 'activo' ORDER
             <li><a href="admin_categorias.php"><i class="bi bi-tags"></i> Categorías</a></li>
             <li><a href="admin_ventas.php"><i class="bi bi-cart-check"></i> Ventas</a></li>
             <li><a href="admin_usuarios.php"><i class="bi bi-people"></i> Usuarios</a></li>
-            <li style="margin-top: 50px;"><a href="index.php"><i class="bi bi-house"></i> Ir a la Tienda</a></li>
+            <li style="margin-top: 50px;"><a href="index.php?ver_tienda=1"><i class="bi bi-house"></i> Ir a la Tienda</a></li>
             <li><a href="logout.php" class="text-danger"><i class="bi bi-box-arrow-right"></i> Cerrar Sesión</a></li>
         </ul>
     </div>

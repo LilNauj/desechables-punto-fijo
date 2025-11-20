@@ -243,7 +243,7 @@ $ultimas_ventas = $stmt->fetch_all(MYSQLI_ASSOC);
                 </a>
             </li>
             <li style="margin-top: 50px;">
-                <a href="index.php">
+                <a href="index.php?ver_tienda=1">
                     <i class="bi bi-house"></i> Ir a la Tienda
                 </a>
             </li>
