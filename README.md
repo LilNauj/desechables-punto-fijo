@@ -1,34 +1,3 @@
-# desechables-punto-fijo
-
-<thinking>
-El usuario quiere que le ayude a crear un archivo README.md para su repositorio de GitHub del proyecto "Desechables Punto Fijo". 
-
-Basándome en los documentos que me ha proporcionado, puedo ver que es un sistema completo de e-commerce para una tienda de productos desechables con:
-
-1. Sistema de autenticación (login/registro)
-2. Panel administrativo completo (productos, categorías, usuarios, ventas)
-3. Catálogo de productos público
-4. Carrito de compras
-5. Sistema de checkout
-6. Gestión de inventario
-7. Base de datos MySQL
-
-Necesito crear un README.md profesional y completo que incluya:
-- Descripción del proyecto
-- Características principales
-- Tecnologías utilizadas
-- Requisitos previos
-- Instalación paso a paso
-- Configuración
-- Estructura del proyecto
-- Credenciales de prueba
-- Capturas de pantalla (referencias)
-- Información de contacto
-- Licencia
-
-Voy a crear un README completo y bien estructurado en español.
-</thinking>
-
 # 📦 Desechables Punto Fijo - Sistema de E-Commerce
 
 ![PHP](https://img.shields.io/badge/PHP-7.4%2B-777BB4?style=flat&logo=php)
