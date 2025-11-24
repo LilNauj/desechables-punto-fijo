@@ -4,7 +4,7 @@
  * Desechables Punto Fijo
  */
 
-require_once 'config.php';
+require_once 'config/config.php';
 
 // Si ya está logueado, redirigir al inicio
 if (estaLogueado()) {
@@ -91,6 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $usuario_id = $stmt->insert_id;
             
             // Iniciar sesión automáticamente
+            session_regenerate_id(true);
             $_SESSION['usuario_id'] = $usuario_id;
             $_SESSION['nombre'] = $nombre;
             $_SESSION['apellido'] = $apellido;
@@ -107,215 +108,348 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro - Desechables Punto Fijo</title>
-    
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    
-    <style>
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 20px 0;
-        }
-        .card-registro {
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-        .card-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 15px 15px 0 0 !important;
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
-        }
-        .btn-primary:hover {
-            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        .logo-container {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 20px;
-            background: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        .logo-container i {
-            font-size: 3rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .form-control:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8 col-lg-6">
-                <div class="card card-registro">
-                    <div class="card-header text-center py-4">
-                        <div class="logo-container">
-                            <i class="bi bi-shop"></i>
-                        </div>
-                        <h3 class="mb-0">Crear Cuenta</h3>
-                        <p class="mb-0">Desechables Punto Fijo Barahoja</p>
-                    </div>
-                    <div class="card-body p-4">
-                        
-                        <?php if ($success): ?>
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                <i class="bi bi-check-circle-fill me-2"></i>
-                                <strong>¡Registro exitoso!</strong> Redirigiendo al inicio...
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                            </div>
-                        <?php endif; ?>
-                        
-                        <?php if (!empty($errores)): ?>
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                                <strong>Errores:</strong>
-                                <ul class="mb-0 mt-2">
-                                    <?php foreach ($errores as $error): ?>
-                                        <li><?php echo $error; ?></li>
-                                    <?php endforeach; ?>
-                                </ul>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                            </div>
-                        <?php endif; ?>
-                        
-                        <?php if (!$success): ?>
-                        <form method="POST" action="" id="formRegistro">
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="nombre" class="form-label">
-                                        <i class="bi bi-person-fill text-primary"></i> Nombre *
-                                    </label>
-                                    <input type="text" class="form-control" id="nombre" name="nombre" 
-                                           value="<?php echo htmlspecialchars($_POST['nombre'] ?? ''); ?>" 
-                                           required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="apellido" class="form-label">
-                                        <i class="bi bi-person-fill text-primary"></i> Apellido *
-                                    </label>
-                                    <input type="text" class="form-control" id="apellido" name="apellido" 
-                                           value="<?php echo htmlspecialchars($_POST['apellido'] ?? ''); ?>" 
-                                           required>
-                                </div>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label for="email" class="form-label">
-                                    <i class="bi bi-envelope-fill text-primary"></i> Correo Electrónico *
-                                </label>
-                                <input type="email" class="form-control" id="email" name="email" 
-                                       value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>" 
-                                       required>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label for="telefono" class="form-label">
-                                    <i class="bi bi-telephone-fill text-primary"></i> Teléfono *
-                                </label>
-                                <input type="tel" class="form-control" id="telefono" name="telefono" 
-                                       placeholder="3177268740" 
-                                       value="<?php echo htmlspecialchars($_POST['telefono'] ?? ''); ?>" 
-                                       pattern="[0-9]{10}" required>
-                                <small class="text-muted">10 dígitos sin espacios</small>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label for="direccion" class="form-label">
-                                    <i class="bi bi-geo-alt-fill text-primary"></i> Dirección
-                                </label>
-                                <textarea class="form-control" id="direccion" name="direccion" 
-                                          rows="2" placeholder="Calle 4ta #6-51, Barrio Barahoja"><?php echo htmlspecialchars($_POST['direccion'] ?? ''); ?></textarea>
-                            </div>
-                            
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="password" class="form-label">
-                                        <i class="bi bi-lock-fill text-primary"></i> Contraseña *
-                                    </label>
-                                    <input type="password" class="form-control" id="password" name="password" 
-                                           minlength="6" required>
-                                    <small class="text-muted">Mínimo 6 caracteres</small>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="confirmar_password" class="form-label">
-                                        <i class="bi bi-lock-fill text-primary"></i> Confirmar Contraseña *
-                                    </label>
-                                    <input type="password" class="form-control" id="confirmar_password" 
-                                           name="confirmar_password" minlength="6" required>
-                                </div>
-                            </div>
-                            
-                            <div class="d-grid gap-2 mt-4">
-                                <button type="submit" class="btn btn-primary btn-lg">
-                                    <i class="bi bi-person-plus-fill me-2"></i>Crear Cuenta
-                                </button>
-                            </div>
-                        </form>
-                        <?php endif; ?>
-                        
-                        <hr class="my-4">
-                        
-                        <div class="text-center">
-                            <p class="mb-0">¿Ya tienes cuenta? 
-                                <a href="login.php" class="text-decoration-none fw-bold">Inicia Sesión</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="text-center mt-3 text-white">
-                    <p class="mb-0">
-                        <i class="bi bi-geo-alt-fill"></i> Calle 4ta #6-51, Barrio Barahoja, Aguachica - Cesar
-                    </p>
-                    <p>
-                        <i class="bi bi-telephone-fill"></i> 317 726 8740 | 315 744 1535
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Registro - Desechables Punto Fijo</title>
+  <meta name="description" content="Crea tu cuenta en Desechables Punto Fijo Barahoja">
+  <meta name="keywords" content="registro, desechables, punto fijo">
 
-    <!-- Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <script>
-        // Validación adicional en el cliente
-        document.getElementById('formRegistro')?.addEventListener('submit', function(e) {
-            const password = document.getElementById('password').value;
-            const confirmar = document.getElementById('confirmar_password').value;
-            
-            if (password !== confirmar) {
-                e.preventDefault();
-                alert('Las contraseñas no coinciden');
-                return false;
-            }
-        });
-    </script>
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+</head>
+
+<body class="register-page">
+
+  <?php include 'includes/header.php'; ?>
+
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title light-background">
+      <div class="container d-lg-flex justify-content-between align-items-center">
+        <h1 class="mb-2 mb-lg-0">Crear Cuenta</h1>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="index.php">Inicio</a></li>
+            <li class="current">Registro</li>
+          </ol>
+        </nav>
+      </div>
+    </div><!-- End Page Title -->
+
+    <!-- Register Section -->
+    <section id="register" class="register section">
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <div class="registration-form-wrapper">
+              <div class="form-header text-center">
+                <h2>Crear Tu Cuenta</h2>
+                <p>Únete a nosotros y empieza a disfrutar de nuestros productos</p>
+              </div>
+
+              <!-- Mensajes de error/éxito -->
+              <?php if ($success): ?>
+                <div class="alert alert-success alert-dismissible fade show" role="alert" data-aos="fade-in">
+                  <i class="bi bi-check-circle-fill me-2"></i>
+                  <strong>¡Registro exitoso!</strong> Tu cuenta ha sido creada. Redirigiendo al inicio...
+                  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+              <?php endif; ?>
+
+              <?php if (!empty($errores)): ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert" data-aos="fade-in">
+                  <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                  <strong>Por favor corrige los siguientes errores:</strong>
+                  <ul class="mb-0 mt-2">
+                    <?php foreach ($errores as $error): ?>
+                      <li><?php echo htmlspecialchars($error); ?></li>
+                    <?php endforeach; ?>
+                  </ul>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+              <?php endif; ?>
+
+              <?php if (!$success): ?>
+              <div class="row">
+                <div class="col-lg-8 mx-auto">
+                  <form action="" method="POST" id="formRegistro">
+                    
+                    <!-- Nombre y Apellido -->
+                    <div class="row mb-3">
+                      <div class="col-md-6">
+                        <div class="form-floating">
+                          <input type="text" 
+                                 class="form-control" 
+                                 id="nombre" 
+                                 name="nombre" 
+                                 placeholder="Nombre" 
+                                 value="<?php echo htmlspecialchars($_POST['nombre'] ?? ''); ?>"
+                                 required 
+                                 autocomplete="given-name">
+                          <label for="nombre">
+                            <i class="bi bi-person me-2"></i>Nombre
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-floating">
+                          <input type="text" 
+                                 class="form-control" 
+                                 id="apellido" 
+                                 name="apellido" 
+                                 placeholder="Apellido" 
+                                 value="<?php echo htmlspecialchars($_POST['apellido'] ?? ''); ?>"
+                                 required 
+                                 autocomplete="family-name">
+                          <label for="apellido">
+                            <i class="bi bi-person me-2"></i>Apellido
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-floating mb-3">
+                      <input type="email" 
+                             class="form-control" 
+                             id="email" 
+                             name="email" 
+                             placeholder="Email" 
+                             value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>"
+                             required 
+                             autocomplete="email">
+                      <label for="email">
+                        <i class="bi bi-envelope me-2"></i>Correo Electrónico
+                      </label>
+                    </div>
+
+                    <!-- Teléfono -->
+                    <div class="form-floating mb-3">
+                      <input type="tel" 
+                             class="form-control" 
+                             id="telefono" 
+                             name="telefono" 
+                             placeholder="Teléfono" 
+                             value="<?php echo htmlspecialchars($_POST['telefono'] ?? ''); ?>"
+                             pattern="[0-9]{10}"
+                             title="Ingresa 10 dígitos sin espacios"
+                             required 
+                             autocomplete="tel">
+                      <label for="telefono">
+                        <i class="bi bi-telephone me-2"></i>Teléfono (10 dígitos)
+                      </label>
+                    </div>
+
+                    <!-- Dirección -->
+                    <div class="form-floating mb-3">
+                      <textarea class="form-control" 
+                                id="direccion" 
+                                name="direccion" 
+                                placeholder="Dirección" 
+                                style="height: 100px"
+                                autocomplete="street-address"><?php echo htmlspecialchars($_POST['direccion'] ?? ''); ?></textarea>
+                      <label for="direccion">
+                        <i class="bi bi-geo-alt me-2"></i>Dirección (Opcional)
+                      </label>
+                    </div>
+
+                    <!-- Contraseñas -->
+                    <div class="row mb-3">
+                      <div class="col-md-6">
+                        <div class="form-floating position-relative">
+                          <input type="password" 
+                                 class="form-control" 
+                                 id="password" 
+                                 name="password" 
+                                 placeholder="Contraseña" 
+                                 minlength="6"
+                                 required 
+                                 autocomplete="new-password">
+                          <label for="password">
+                            <i class="bi bi-lock me-2"></i>Contraseña (mín. 6 caracteres)
+                          </label>
+                          <span class="password-toggle" onclick="togglePassword('password')" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; z-index: 10;">
+                            <i class="bi bi-eye"></i>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-floating position-relative">
+                          <input type="password" 
+                                 class="form-control" 
+                                 id="confirmar_password" 
+                                 name="confirmar_password" 
+                                 placeholder="Confirmar Contraseña" 
+                                 minlength="6"
+                                 required 
+                                 autocomplete="new-password">
+                          <label for="confirmar_password">
+                            <i class="bi bi-lock me-2"></i>Confirmar Contraseña
+                          </label>
+                          <span class="password-toggle" onclick="togglePassword('confirmar_password')" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; z-index: 10;">
+                            <i class="bi bi-eye"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Términos y Condiciones -->
+                    <div class="form-check mb-4">
+                      <input class="form-check-input" 
+                             type="checkbox" 
+                             id="termsCheck" 
+                             name="termsCheck" 
+                             required>
+                      <label class="form-check-label" for="termsCheck">
+                        Acepto los <a href="terminos.php" target="_blank">Términos y Condiciones</a> y la <a href="privacidad.php" target="_blank">Política de Privacidad</a>
+                      </label>
+                    </div>
+
+                    <!-- Botón de Registro -->
+                    <div class="d-grid mb-4">
+                      <button type="submit" class="btn btn-register">
+                        <i class="bi bi-person-plus-fill me-2"></i>
+                        Crear Cuenta
+                      </button>
+                    </div>
+
+                    <!-- Link a Login -->
+                    <div class="login-link text-center">
+                      <p>¿Ya tienes una cuenta? <a href="login.php">Inicia Sesión</a></p>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <!-- Social Login -->
+              <div class="social-login">
+                <div class="row">
+                  <div class="col-lg-8 mx-auto">
+                    <div class="divider">
+                      <span></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <?php endif; ?>
+
+              <!-- Elementos Decorativos -->
+              <div class="decorative-elements">
+                <div class="circle circle-1"></div>
+                <div class="circle circle-2"></div>
+                <div class="circle circle-3"></div>
+                <div class="square square-1"></div>
+                <div class="square square-2"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section><!-- /Register Section -->
+
+  </main>
+
+  <?php include 'includes/footer.php'; ?>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
+    <i class="bi bi-arrow-up-short"></i>
+  </a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <script>
+    // Función para mostrar/ocultar contraseña
+    function togglePassword(inputId) {
+      const input = document.getElementById(inputId);
+      const icon = event.currentTarget.querySelector('i');
+      
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('bi-eye');
+        icon.classList.add('bi-eye-slash');
+      } else {
+        input.type = 'password';
+        icon.classList.remove('bi-eye-slash');
+        icon.classList.add('bi-eye');
+      }
+    }
+
+    // Validación adicional en el cliente
+    document.getElementById('formRegistro')?.addEventListener('submit', function(e) {
+      const password = document.getElementById('password').value;
+      const confirmar = document.getElementById('confirmar_password').value;
+      
+      if (password !== confirmar) {
+        e.preventDefault();
+        alert('Las contraseñas no coinciden');
+        document.getElementById('confirmar_password').focus();
+        return false;
+      }
+
+      // Validar teléfono
+      const telefono = document.getElementById('telefono').value;
+      if (!/^[0-9]{10}$/.test(telefono)) {
+        e.preventDefault();
+        alert('El teléfono debe tener exactamente 10 dígitos');
+        document.getElementById('telefono').focus();
+        return false;
+      }
+    });
+
+    // Validación en tiempo real de contraseñas
+    document.getElementById('confirmar_password')?.addEventListener('input', function() {
+      const password = document.getElementById('password').value;
+      const confirmar = this.value;
+      
+      if (confirmar && password !== confirmar) {
+        this.setCustomValidity('Las contraseñas no coinciden');
+      } else {
+        this.setCustomValidity('');
+      }
+    });
+
+    // Validación en tiempo real de teléfono
+    document.getElementById('telefono')?.addEventListener('input', function(e) {
+      // Solo permitir números
+      this.value = this.value.replace(/\D/g, '');
+      
+      // Limitar a 10 dígitos
+      if (this.value.length > 10) {
+        this.value = this.value.slice(0, 10);
+      }
+    });
+  </script>
+
 </body>
 </html>

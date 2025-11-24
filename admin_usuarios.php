@@ -4,7 +4,7 @@
  * Ver, Editar, Activar/Desactivar usuarios
  */
 
-require_once 'config.php';
+require_once 'config/config.php';
 requerirLogin();
 requerirAdmin();
 
@@ -198,7 +198,7 @@ $usuarios_activos = count(array_filter($usuarios, function($u) { return $u['esta
             left: 0;
             height: 100vh;
             width: var(--sidebar-width);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #7b7b7bff 0%, #000000ff 100%);
             color: white;
             overflow-y: auto;
             z-index: 1000;
@@ -283,13 +283,13 @@ $usuarios_activos = count(array_filter($usuarios, function($u) { return $u['esta
         }
         
         .btn-gradient {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #7b7b7bff 0%, #000000ff 100%);
             color: white;
             border: none;
         }
         
         .btn-gradient:hover {
-            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            background: linear-gradient(135deg, #7b7b7bff 0%, #000000ff 100%);
             color: white;
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);

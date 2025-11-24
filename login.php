@@ -4,9 +4,9 @@
  * Desechables Punto Fijo
  */
 
-require_once 'config.php';
+require_once 'config/config.php';
 
-// Si ya está logueado, redirigir según el rol
+// Si ya estÃ¡ logueado, redirigir segÃºn el rol
 if (estaLogueado()) {
     if (esAdmin()) {
         redirect('admin.php');
@@ -16,8 +16,9 @@ if (estaLogueado()) {
 }
 
 $error = '';
+$success = '';
 
-// Procesar el formulario cuando se envía
+// Procesar el formulario cuando se envÃ­a
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // Obtener y sanitizar datos
@@ -25,11 +26,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
     $recordar = isset($_POST['recordar']);
     
-    // Validaciones básicas
+    // Validaciones bÃ¡sicas
     if (empty($email) || empty($password)) {
         $error = "Por favor complete todos los campos";
     } elseif (!validarEmail($email)) {
-        $error = "Email no válido";
+        $error = "Email no vÃ¡lido";
     } else {
         // Buscar usuario en la base de datos
         $db = getDB();
@@ -48,23 +49,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Verificar la contraseña
             elseif (password_verify($password, $usuario['password'])) {
                 
-                // Regenerar ID de sesión para prevenir session fixation
+                // Regenerar ID de sesion para prevenir session fixation
                 session_regenerate_id(true);
                 
-                // Guardar datos en la sesión
+                // Guardar datos en la sesion
                 $_SESSION['usuario_id'] = $usuario['id'];
                 $_SESSION['nombre'] = $usuario['nombre'];
                 $_SESSION['apellido'] = $usuario['apellido'];
                 $_SESSION['email'] = $usuario['email'];
                 $_SESSION['rol'] = $usuario['rol'];
                 
-                // Actualizar última sesión
+                // Actualizar Ãºltima sesion
                 $update_stmt = $db->prepare("UPDATE usuarios SET ultima_sesion = NOW() WHERE id = ?");
                 $update_stmt->bind_param("i", $usuario['id']);
                 $update_stmt->execute();
                 $update_stmt->close();
                 
-                // Redirigir según el rol
+                // Redirigir segÃºn el rol
                 if ($usuario['rol'] === 'admin') {
                     header("Location: admin.php");
                     exit();
@@ -83,195 +84,183 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión - Desechables Punto Fijo</title>
-    
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    
-    <style>
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-        }
-        .card-login {
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-        .card-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 15px 15px 0 0 !important;
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
-            transition: all 0.3s;
-        }
-        .btn-primary:hover {
-            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        .logo-container {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 20px;
-            background: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        .logo-container i {
-            font-size: 4rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .form-control:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
-        }
-        .divider {
-            display: flex;
-            align-items: center;
-            text-align: center;
-            margin: 20px 0;
-        }
-        .divider::before,
-        .divider::after {
-            content: '';
-            flex: 1;
-            border-bottom: 1px solid #dee2e6;
-        }
-        .divider span {
-            padding: 0 10px;
-            color: #6c757d;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-5">
-                <div class="card card-login">
-                    <div class="card-header text-center py-4">
-                        <div class="logo-container">
-                            <i class="bi bi-shop"></i>
-                        </div>
-                        <h3 class="mb-0">Iniciar Sesión</h3>
-                        <p class="mb-0">Desechables Punto Fijo Barahoja</p>
-                    </div>
-                    <div class="card-body p-4">
-                        
-                        <?php if (!empty($error)): ?>
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                                <?php echo $error; ?>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                            </div>
-                        <?php endif; ?>
-                        
-                        <form method="POST" action="">
-                            <div class="mb-3">
-                                <label for="email" class="form-label">
-                                    <i class="bi bi-envelope-fill text-primary"></i> Correo Electrónico
-                                </label>
-                                <input type="email" class="form-control form-control-lg" id="email" 
-                                       name="email" placeholder="tu@email.com" 
-                                       value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>" 
-                                       required autofocus>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label for="password" class="form-label">
-                                    <i class="bi bi-lock-fill text-primary"></i> Contraseña
-                                </label>
-                                <input type="password" class="form-control form-control-lg" 
-                                       id="password" name="password" placeholder="••••••••" required>
-                            </div>
-                            
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="recordar" name="recordar">
-                                <label class="form-check-label" for="recordar">
-                                    Recordarme
-                                </label>
-                            </div>
-                            
-                            <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-primary btn-lg">
-                                    <i class="bi bi-box-arrow-in-right me-2"></i>Iniciar Sesión
-                                </button>
-                            </div>
-                        </form>
-                        
-                        <div class="divider">
-                            <span>o</span>
-                        </div>
-                        
-                        <div class="text-center">
-                            <p class="mb-3">¿No tienes una cuenta?</p>
-                            <a href="registro.php" class="btn btn-outline-primary btn-lg w-100">
-                                <i class="bi bi-person-plus-fill me-2"></i>Crear Cuenta Nueva
-                            </a>
-                        </div>
-                        
-                        <hr class="my-4">
-                        
-                        <div class="text-center">
-                            <small class="text-muted">
-                                <i class="bi bi-shield-check text-success"></i> 
-                                Tus datos están protegidos
-                            </small>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Credenciales de prueba -->
-                <div class="card mt-3" style="background: rgba(255,255,255,0.9);">
-                    <div class="card-body">
-                        <h6 class="card-title text-center mb-3">
-                            <i class="bi bi-info-circle text-primary"></i> Credenciales de Prueba
-                        </h6>
-                        <div class="row text-center">
-                            <div class="col-6">
-                                <small class="text-muted d-block">Admin</small>
-                                <code>admin@puntofijo.com</code><br>
-                                <code>admin123</code>
-                            </div>
-                            <div class="col-6">
-                                <small class="text-muted d-block">Cliente</small>
-                                <code>cliente@demo.com</code><br>
-                                <code>admin123</code>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="text-center mt-3 text-white">
-                    <p class="mb-0">
-                        <i class="bi bi-geo-alt-fill"></i> Calle 4ta #6-51, Barrio Barahoja, Aguachica - Cesar
-                    </p>
-                    <p>
-                        <i class="bi bi-telephone-fill"></i> 317 726 8740 | 315 744 1535
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Iniciar Sesion - Desechables Punto Fijo</title>
+  <meta name="description" content="Inicia sesion en Desechables Punto Fijo Barahoja">
+  <meta name="keywords" content="login, desechables, punto fijo">
 
-    <!-- Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+</head>
+
+<body class="login-page">
+
+  <?php include 'includes/header.php'; ?>
+
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title light-background">
+      <div class="container d-lg-flex justify-content-between align-items-center">
+        <h1 class="mb-2 mb-lg-0">Iniciar Sesion</h1>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="index.php">Inicio</a></li>
+            <li class="current">Iniciar sesion</li>
+          </ol>
+        </nav>
+      </div>
+    </div><!-- End Page Title -->
+
+    <!-- Login Section -->
+    <section id="login" class="login section">
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row justify-content-center">
+          <div class="col-lg-8 col-md-10">
+            <div class="auth-container" data-aos="fade-in" data-aos-delay="200">
+
+              <!-- Mensajes de error/Ã©xito -->
+              <?php if (!empty($error)): ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                  <?php echo $error; ?>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+              <?php endif; ?>
+
+              <?php if (!empty($success)): ?>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  <i class="bi bi-check-circle-fill me-2"></i>
+                  <?php echo $success; ?>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+              <?php endif; ?>
+
+              <!-- Login Form -->
+              <div class="auth-form login-form active">
+                <div class="form-header">
+                  <h3>Bienvenido de Nuevo</h3>
+                  <p>Inicia sesion en tu cuenta</p>
+                </div>
+
+                <form class="auth-form-content" method="POST" action="">
+                  <div class="input-group mb-3">
+                    <span class="input-icon">
+                      <i class="bi bi-envelope"></i>
+                    </span>
+                    <input type="email" 
+                           class="form-control" 
+                           name="email"
+                           placeholder="Correo electrónico" 
+                           value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>"
+                           required 
+                           autocomplete="email">
+                  </div>
+
+                  <div class="input-group mb-3">
+                    <span class="input-icon">
+                      <i class="bi bi-lock"></i>
+                    </span>
+                    <input type="password" 
+                           class="form-control" 
+                           name="password"
+                           placeholder="Contraseña" 
+                           required 
+                           autocomplete="current-password">
+                    <span class="password-toggle" onclick="togglePassword(this)">
+                      <i class="bi bi-eye"></i>
+                    </span>
+                  </div>
+
+                  <div class="form-options mb-4">
+                    <div class="remember-me">
+                      <input type="checkbox" id="rememberLogin" name="recordar">
+                      <label for="rememberLogin">Recordarme</label>
+                    </div>
+                    <a href="recuperar_password.php" class="forgot-password">¿Olvidaste tu contraseña?</a>
+                  </div>
+
+                  <button type="submit" class="auth-btn primary-btn mb-3">
+                    Iniciar sesion
+                    <i class="bi bi-arrow-right"></i>
+                  </button>
+
+                  <div class="switch-form">
+                    <span>¿No tienes una cuenta?</span>
+                    <a href="registro.php" class="switch-btn">Crear cuenta</a>
+                  </div>
+                </form>
+              </div>
+
+              <!-- InformaciÃ³n adicional -->
+              <div class="mt-4 p-3 bg-light rounded">
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section><!-- /Login Section -->
+
+  </main>
+
+  <?php include 'includes/footer.php'; ?>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
+    <i class="bi bi-arrow-up-short"></i>
+  </a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <script>
+    // Función para mostrar/ocultar contraseña
+    function togglePassword(element) {
+      const input = element.previousElementSibling;
+      const icon = element.querySelector('i');
+      
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('bi-eye');
+        icon.classList.add('bi-eye-slash');
+      } else {
+        input.type = 'password';
+        icon.classList.remove('bi-eye-slash');
+        icon.classList.add('bi-eye');
+      }
+    }
+  </script>
+
 </body>
 </html>

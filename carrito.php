@@ -4,7 +4,7 @@
  * Desechables Punto Fijo
  */
 
-require_once 'config.php';
+require_once 'config/config.php';
 
 // Si no está logueado, redirigir al login
 if (!estaLogueado()) {

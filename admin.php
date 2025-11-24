@@ -4,7 +4,7 @@
  * Desechables Punto Fijo
  */
 
-require_once 'config.php';
+require_once 'config/config.php';
 
 // Verificar que esté logueado y sea admin
 requerirLogin();
@@ -54,7 +54,7 @@ $ultimas_ventas = $stmt->fetch_all(MYSQLI_ASSOC);
     <style>
         :root {
             --sidebar-width: 250px;
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --primary-gradient: linear-gradient(135deg, #4d4d4dff 0%, #000000ff 100%);
         }
         
         body {

@@ -4,7 +4,7 @@
  * CRUD Completo: Crear, Leer, Actualizar, Eliminar
  */
 
-require_once 'config.php';
+require_once 'config/config.php';
 requerirLogin();
 requerirAdmin();
 
@@ -130,7 +130,7 @@ $categorias = $db->query("SELECT * FROM categorias WHERE estado = 'activo' ORDER
             left: 0;
             height: 100vh;
             width: var(--sidebar-width);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #7b7b7bff 0%, #000000ff 100%);
             color: white;
             overflow-y: auto;
             z-index: 1000;
@@ -193,13 +193,13 @@ $categorias = $db->query("SELECT * FROM categorias WHERE estado = 'activo' ORDER
         }
         
         .btn-gradient {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #7b7b7bff 0%, #000000ff 100%);
             color: white;
             border: none;
         }
         
         .btn-gradient:hover {
-            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            background: linear-gradient(135deg, #7b7b7bff 0%, #000000ff 100%);
             color: white;
         }
         

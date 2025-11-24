@@ -4,7 +4,7 @@
  * Carga los detalles de una venta específica
  */
 
-require_once 'config.php';
+require_once 'config/config.php';
 
 // Verificar que sea admin
 if (!estaLogueado() || !esAdmin()) {

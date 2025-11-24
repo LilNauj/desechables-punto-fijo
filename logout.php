@@ -4,7 +4,7 @@
  * Desechables Punto Fijo
  */
 
-require_once 'config.php';
+require_once 'config/config.php';
 
 // Destruir todas las variables de sesión
 $_SESSION = array();

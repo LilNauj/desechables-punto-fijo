@@ -4,7 +4,7 @@
  * Panel Administrativo - Desechables Punto Fijo
  */
 
-require_once 'config.php';
+require_once 'config/config.php';
 requerirLogin();
 requerirAdmin();
 
@@ -113,7 +113,7 @@ $stats_mes = $db->query("SELECT COUNT(*) as total, COALESCE(SUM(total), 0) as in
             left: 0;
             height: 100vh;
             width: var(--sidebar-width);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #7b7b7bff 0%, #000000ff 100%);
             color: white;
             overflow-y: auto;
             z-index: 1000;
