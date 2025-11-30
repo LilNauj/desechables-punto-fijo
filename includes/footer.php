@@ -28,9 +28,6 @@
             <h4>Comprar</h4>
             <ul class="footer-links">
               <li><a href="productos.php">Todos los Productos</a></li>
-              <li><a href="categorias.php">Categorías</a></li>
-              <li><a href="ofertas.php">Ofertas</a></li>
-              <li><a href="novedades.php">Novedades</a></li>
             </ul>
           </div>
         </div>
@@ -41,8 +38,6 @@
             <ul class="footer-links">
               <li><a href="preguntas.php">Preguntas Frecuentes</a></li>
               <li><a href="envios.php">Información de Envío</a></li>
-              <li><a href="devoluciones.php">Devoluciones</a></li>
-              <li><a href="contacto.php">Contáctanos</a></li>
             </ul>
           </div>
         </div>

@@ -65,11 +65,13 @@ $ultimas_ventas = $stmt->fetch_all(MYSQLI_ASSOC);
             position: fixed;
             top: 0;
             left: 0;
-            width: var(--sidebar-width);
             height: 100vh;
-            background: #111827;
-            color: #e5e7eb;
-            padding-top: 20px;
+            width: var(--sidebar-width);
+            background: var(--primary-gradient);
+            color: white;
+            transition: all 0.3s;
+            z-index: 1000;
+            overflow-y: auto;
         }
         
         .sidebar-header {
@@ -236,7 +238,7 @@ $ultimas_ventas = $stmt->fetch_all(MYSQLI_ASSOC);
                 </a>
             </li>
             <li>
-                <a href="admin_configuraciones.php">
+                <a href="admin_configuracion.php">
                     <i class="bi bi-gear"></i> Configuración
                 </a>
             </li>

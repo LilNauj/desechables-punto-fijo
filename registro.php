@@ -260,18 +260,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                       </label>
                     </div>
 
-                    <!-- Dirección -->
-                    <div class="form-floating mb-3">
-                      <textarea class="form-control" 
-                                id="direccion" 
-                                name="direccion" 
-                                placeholder="Dirección" 
-                                style="height: 100px"
-                                autocomplete="street-address"><?php echo htmlspecialchars($_POST['direccion'] ?? ''); ?></textarea>
-                      <label for="direccion">
-                        <i class="bi bi-geo-alt me-2"></i>Dirección (Opcional)
-                      </label>
-                    </div>
+                    
 
                     <!-- Contraseñas -->
                     <div class="row mb-3">

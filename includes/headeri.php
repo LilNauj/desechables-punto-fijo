@@ -126,20 +126,21 @@
   </div>
 
   <!-- Navigation -->
-  <div class="header-nav">
-    <div class="container-fluid container-xl position-relative">
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="index.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : ''; ?>">Inicio</a></li>
-          <li><a href="productos.php">Productos</a></li>
-          <li><a href="categorias.php">Categorías</a></li>
-          <li><a href="ofertas.php">Ofertas</a></li>
-          <li><a href="nosotros.php">Nosotros</a></li>
-          <li><a href="contacto.php">Contacto</a></li>
-        </ul>
-      </nav>
-    </div>
-  </div>
+        <div class="header-nav">
+            <div class="container-fluid container-xl position-relative">
+                <nav id="navmenu" class="navmenu">
+                    <ul>
+                        <li><a href="index.php">Inicio</a></li>
+                        <li><a href="productos.php">Productos</a></li>
+                        <li><a href="#">Mis Pedidos</a></li>
+                        <?php if (esAdmin()): ?>
+                            <li><a href="admin.php">Admin</a></li>
+                        <?php endif; ?>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
 
   <!-- Mobile Search Form -->
   <div class="collapse" id="mobileSearch">

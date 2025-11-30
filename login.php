@@ -8,11 +8,11 @@ require_once 'config/config.php';
 
 // Si ya estÃ¡ logueado, redirigir segÃºn el rol
 if (estaLogueado()) {
-    if (esAdmin()) {
-        redirect('admin.php');
-    } else {
-        redirect('index.php');
-    }
+  if (esAdmin()) {
+    redirect('admin.php');
+  } else {
+    redirect('index.php');
+  }
 }
 
 $error = '';
@@ -20,72 +20,73 @@ $success = '';
 
 // Procesar el formulario cuando se envÃ­a
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    
-    // Obtener y sanitizar datos
-    $email = sanitize($_POST['email'] ?? '');
-    $password = $_POST['password'] ?? '';
-    $recordar = isset($_POST['recordar']);
-    
-    // Validaciones bÃ¡sicas
-    if (empty($email) || empty($password)) {
-        $error = "Por favor complete todos los campos";
-    } elseif (!validarEmail($email)) {
-        $error = "Email no vÃ¡lido";
-    } else {
-        // Buscar usuario en la base de datos
-        $db = getDB();
-        $stmt = $db->prepare("SELECT id, nombre, apellido, email, password, rol, estado FROM usuarios WHERE email = ?");
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        
-        if ($result->num_rows === 1) {
-            $usuario = $result->fetch_assoc();
-            
-            // Verificar si el usuario está activo
-            if ($usuario['estado'] === 'inactivo') {
-                $error = "Tu cuenta está inactiva. Contacta al administrador.";
-            } 
-            // Verificar la contraseña
-            elseif (password_verify($password, $usuario['password'])) {
-                
-                // Regenerar ID de sesion para prevenir session fixation
-                session_regenerate_id(true);
-                
-                // Guardar datos en la sesion
-                $_SESSION['usuario_id'] = $usuario['id'];
-                $_SESSION['nombre'] = $usuario['nombre'];
-                $_SESSION['apellido'] = $usuario['apellido'];
-                $_SESSION['email'] = $usuario['email'];
-                $_SESSION['rol'] = $usuario['rol'];
-                
-                // Actualizar Ãºltima sesion
-                $update_stmt = $db->prepare("UPDATE usuarios SET ultima_sesion = NOW() WHERE id = ?");
-                $update_stmt->bind_param("i", $usuario['id']);
-                $update_stmt->execute();
-                $update_stmt->close();
-                
-                // Redirigir segÃºn el rol
-                if ($usuario['rol'] === 'admin') {
-                    header("Location: admin.php");
-                    exit();
-                } else {
-                    header("Location: index.php");
-                    exit();
-                }
-            } else {
-                $error = "Email o contraseña incorrectos";
-            }
+
+  // Obtener y sanitizar datos
+  $email = sanitize($_POST['email'] ?? '');
+  $password = $_POST['password'] ?? '';
+  $recordar = isset($_POST['recordar']);
+
+  // Validaciones bÃ¡sicas
+  if (empty($email) || empty($password)) {
+    $error = "Por favor complete todos los campos";
+  } elseif (!validarEmail($email)) {
+    $error = "Email no vÃ¡lido";
+  } else {
+    // Buscar usuario en la base de datos
+    $db = getDB();
+    $stmt = $db->prepare("SELECT id, nombre, apellido, email, password, rol, estado FROM usuarios WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows === 1) {
+      $usuario = $result->fetch_assoc();
+
+      // Verificar si el usuario está activo
+      if ($usuario['estado'] === 'inactivo') {
+        $error = "Tu cuenta está inactiva. Contacta al administrador.";
+      }
+      // Verificar la contraseña
+      elseif (password_verify($password, $usuario['password'])) {
+
+        // Regenerar ID de sesion para prevenir session fixation
+        session_regenerate_id(true);
+
+        // Guardar datos en la sesion
+        $_SESSION['usuario_id'] = $usuario['id'];
+        $_SESSION['nombre'] = $usuario['nombre'];
+        $_SESSION['apellido'] = $usuario['apellido'];
+        $_SESSION['email'] = $usuario['email'];
+        $_SESSION['rol'] = $usuario['rol'];
+
+        // Actualizar Ãºltima sesion
+        $update_stmt = $db->prepare("UPDATE usuarios SET ultima_sesion = NOW() WHERE id = ?");
+        $update_stmt->bind_param("i", $usuario['id']);
+        $update_stmt->execute();
+        $update_stmt->close();
+
+        // Redirigir segÃºn el rol
+        if ($usuario['rol'] === 'admin') {
+          header("Location: admin.php");
+          exit();
         } else {
-            $error = "Email o contraseña incorrectos";
+          header("Location: index.php");
+          exit();
         }
-        
-        $stmt->close();
+      } else {
+        $error = "Email o contraseña incorrectos";
+      }
+    } else {
+      $error = "Email o contraseña incorrectos";
     }
+
+    $stmt->close();
+  }
 }
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -100,7 +101,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
+    rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -118,15 +121,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <main class="main">
 
     <!-- Page Title -->
-    <div class="page-title light-background">
-      <div class="container d-lg-flex justify-content-between align-items-center">
-        <h1 class="mb-2 mb-lg-0">Iniciar Sesion</h1>
+    <div class="page-title light-background position-relative">
+      <div class="container">
         <nav class="breadcrumbs">
           <ol>
             <li><a href="index.php">Inicio</a></li>
-            <li class="current">Iniciar sesion</li>
+            <li class="current">Iniciar Sesión</li>
           </ol>
         </nav>
+        <h1>Iniciar Sesión</h1>
       </div>
     </div><!-- End Page Title -->
 
@@ -168,25 +171,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <span class="input-icon">
                       <i class="bi bi-envelope"></i>
                     </span>
-                    <input type="email" 
-                           class="form-control" 
-                           name="email"
-                           placeholder="Correo electrónico" 
-                           value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>"
-                           required 
-                           autocomplete="email">
+                    <input type="email" class="form-control" name="email" placeholder="Correo electrónico"
+                      value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>" required autocomplete="email">
                   </div>
 
                   <div class="input-group mb-3">
                     <span class="input-icon">
                       <i class="bi bi-lock"></i>
                     </span>
-                    <input type="password" 
-                           class="form-control" 
-                           name="password"
-                           placeholder="Contraseña" 
-                           required 
-                           autocomplete="current-password">
+                    <input type="password" class="form-control" name="password" placeholder="Contraseña" required
+                      autocomplete="current-password">
                     <span class="password-toggle" onclick="togglePassword(this)">
                       <i class="bi bi-eye"></i>
                     </span>
@@ -249,7 +243,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     function togglePassword(element) {
       const input = element.previousElementSibling;
       const icon = element.querySelector('i');
-      
+
       if (input.type === 'password') {
         input.type = 'text';
         icon.classList.remove('bi-eye');
@@ -263,4 +257,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </script>
 
 </body>
+
 </html>

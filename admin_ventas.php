@@ -111,12 +111,11 @@ $stats_mes = $db->query("SELECT COUNT(*) as total, COALESCE(SUM(total), 0) as in
             position: fixed;
             top: 0;
             left: 0;
-            height: 100vh;
             width: var(--sidebar-width);
-            background: linear-gradient(135deg, #7b7b7bff 0%, #000000ff 100%);
-            color: white;
-            overflow-y: auto;
-            z-index: 1000;
+            height: 100vh;
+            background: #111827;
+            color: #e5e7eb;
+            padding-top: 20px;
         }
         
         .sidebar-header {
@@ -216,14 +215,52 @@ $stats_mes = $db->query("SELECT COUNT(*) as total, COALESCE(SUM(total), 0) as in
             <small>Desechables Punto Fijo</small>
         </div>
         
-        <ul class="sidebar-menu">
-            <li><a href="admin.php"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
-            <li><a href="admin_productos.php"><i class="bi bi-box-seam"></i> Productos</a></li>
-            <li><a href="admin_categorias.php"><i class="bi bi-tags"></i> Categorías</a></li>
-            <li><a href="admin_ventas.php" class="active"><i class="bi bi-cart-check"></i> Ventas</a></li>
-            <li><a href="admin_usuarios.php"><i class="bi bi-people"></i> Usuarios</a></li>
-            <li style="margin-top: 50px;"><a href="index.php?ver_tienda=1"><i class="bi bi-house"></i> Ir a la Tienda</a></li>
-            <li><a href="logout.php" class="text-danger"><i class="bi bi-box-arrow-right"></i> Cerrar Sesión</a></li>
+<ul class="sidebar-menu">
+            <li>
+                <a href="admin.php">
+                    <i class="bi bi-speedometer2"></i> Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="admin_productos.php">
+                    <i class="bi bi-box-seam"></i> Productos
+                </a>
+            </li>
+            <li>
+                <a href="admin_categorias.php">
+                    <i class="bi bi-tags"></i> Categorías
+                </a>
+            </li>
+            <li>
+                <a href="admin_ventas.php" class="active">
+                    <i class="bi bi-cart-check"></i> Ventas
+                </a>
+            </li>
+            <li>
+                <a href="admin_usuarios.php">
+                    <i class="bi bi-people"></i> Usuarios
+                </a>
+            </li>
+            <li>
+                <a href="admin_reportes.php">
+                    <i class="bi bi-graph-up"></i> Reportes
+                </a>
+            </li>
+            <li>
+                <a href="admin_configuraciones.php">
+                    <i class="bi bi-gear"></i> Configuración
+                </a>
+            </li>
+            <li style="margin-top: 50px;">
+                <a href="index.php?ver_tienda=1">
+                    <i class="bi bi-house"></i> Ir a la Tienda
+                </a>
+            </li>
+            <li>
+                <a href="logout.php" class="text-danger">
+                    <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+                </a>
+            </li>
         </ul>
     </div>
 
